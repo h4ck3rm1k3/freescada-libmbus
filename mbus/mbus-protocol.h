@@ -461,6 +461,8 @@ int mbus_frame_internal_pack(mbus_frame *frame, mbus_frame_data *frame_data);
 //
 // data parsing
 //
+const char *mbus_data_record_unit(mbus_data_record *record);
+const char *mbus_data_record_value(mbus_data_record *record);
 const char *mbus_data_record_function(mbus_data_record *record);
 const char *mbus_data_fixed_function(int status);
 

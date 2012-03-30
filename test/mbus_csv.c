@@ -567,7 +567,7 @@ mbus_vib_unit_lookup2(mbus_value_information_block *vib, int *prefix)
 //
 //------------------------------------------------------------------------------
 const char *
-mbus_data_record_decode2(mbus_data_record *record, int *dataType, double *value)
+mbus_data_record_decode2(mbus_data_record *record, int *dataType, long double *value)
 {
     static char buff[256];
     u_char vif, vife;
@@ -600,7 +600,7 @@ mbus_data_record_decode2(mbus_data_record *record, int *dataType, double *value)
 		if (dataType != NULL)
 		  *dataType = 0;
 		if (value != NULL)
-		  *value = (double)val;
+		  *value = (long double)val;
                
                 snprintf(buff, sizeof(buff), "%d", val);
 
@@ -627,7 +627,7 @@ mbus_data_record_decode2(mbus_data_record *record, int *dataType, double *value)
 		    if (dataType != NULL)
 		      *dataType = 0;
 		    if (value != NULL)
-		      *value = (double)val;
+		      *value = (long double)val;
 		    
                     snprintf(buff, sizeof(buff), "%d", val);
                     if (debug)
@@ -643,7 +643,7 @@ mbus_data_record_decode2(mbus_data_record *record, int *dataType, double *value)
 		if (dataType != NULL)
 		  *dataType = 0;
 		if (value != NULL)
-		  *value = (double)val;
+		  *value = (long double)val;
                         
                 snprintf(buff, sizeof(buff), "%d", val);
 
@@ -676,7 +676,7 @@ mbus_data_record_decode2(mbus_data_record *record, int *dataType, double *value)
 		    if (dataType != NULL)
 		      *dataType = 0;
 		    if (value != NULL)
-		      *value = (double)val;
+		      *value = (long double)val;
                     snprintf(buff, sizeof(buff), "%d", val);
                 }
 
@@ -691,7 +691,7 @@ mbus_data_record_decode2(mbus_data_record *record, int *dataType, double *value)
 		if (dataType != NULL)
 		  *dataType = 0;
 		if (value != NULL)
-		  *value = (double)val3;
+		  *value = (long double)val3;
 		
 		snprintf(buff, sizeof(buff), "%f", val3);
 		
@@ -706,7 +706,7 @@ mbus_data_record_decode2(mbus_data_record *record, int *dataType, double *value)
 		if (dataType != NULL)
 		  *dataType = 0;
 		if (value != NULL)
-		  *value = (double)val2;
+		  *value = (long double)(unsigned long)val2;
         
                 snprintf(buff, sizeof(buff), "%lu", val2);
 
@@ -721,7 +721,7 @@ mbus_data_record_decode2(mbus_data_record *record, int *dataType, double *value)
 		if (dataType != NULL)
 		  *dataType = 0;
 		if (value != NULL)
-		  *value = (double)val2;
+		  *value = (long double)(unsigned long)val2;
         
                 snprintf(buff, sizeof(buff), "%lu", val2);
 
@@ -738,7 +738,7 @@ mbus_data_record_decode2(mbus_data_record *record, int *dataType, double *value)
 		if (dataType != NULL)
 		  *dataType = 0;
 		if (value != NULL)
-		  *value = (double)val;
+		  *value = (long double)val;
 		
                 snprintf(buff, sizeof(buff), "%d", val);     
         
@@ -753,7 +753,7 @@ mbus_data_record_decode2(mbus_data_record *record, int *dataType, double *value)
 		if (dataType != NULL)
 		  *dataType = 0;
 		if (value != NULL)
-		  *value = (double)val;
+		  *value = (long double)val;
 		
                 snprintf(buff, sizeof(buff), "%d", val);     
 
@@ -768,7 +768,7 @@ mbus_data_record_decode2(mbus_data_record *record, int *dataType, double *value)
 		if (dataType != NULL)
 		  *dataType = 0;
 		if (value != NULL)
-		  *value = (double)val;
+		  *value = (long double)val;
 		
                 snprintf(buff, sizeof(buff), "%d", val);     
 
@@ -783,7 +783,7 @@ mbus_data_record_decode2(mbus_data_record *record, int *dataType, double *value)
 		if (dataType != NULL)
 		  *dataType = 0;
 		if (value != NULL)
-		  *value = (double)val;
+		  *value = (long double)val;
 		
                 snprintf(buff, sizeof(buff), "%d", val);
 
@@ -798,7 +798,7 @@ mbus_data_record_decode2(mbus_data_record *record, int *dataType, double *value)
 		if (dataType != NULL)
 		  *dataType = 0;
 		if (value != NULL)
-		  *value = (double)val2;
+		  *value = (long double)val2;
 		
                 snprintf(buff, sizeof(buff), "%lu", val2);
 
@@ -833,7 +833,7 @@ mbus_data_record_decode2(mbus_data_record *record, int *dataType, double *value)
     return NULL;
 }
 
-double
+long double
 simple_pow(int exp)
 {
   int pot = 1;
@@ -853,9 +853,9 @@ simple_pow(int exp)
       }
       
       if (sign == 1)
-	return (double)pot;
+	return (long double)pot;
       else
-	return 1.0/(double)pot;
+	return 1.0/(long double)pot;
 }
 
 const char *
@@ -863,7 +863,7 @@ mbus_data_record_value_and_unit(mbus_data_record* record)
 {
     static char buff[128];
     int len = 0;
-    double value;
+    long double value;
     
     if (record)
     {
@@ -878,16 +878,16 @@ mbus_data_record_value_and_unit(mbus_data_record* record)
       
       if (dataType == 0)
       {
-	double scale_factor = simple_pow(prefix);
+	long double scale_factor = simple_pow(prefix);
 	value *= scale_factor;
 	
-	len += snprintf(&buff[len], sizeof(buff) - len, "%f\t", value);
+	len += snprintf(&buff[len], sizeof(buff) - len, "%Lf\t", value);
 	len += snprintf(&buff[len], sizeof(buff) - len, "%s\t", unitString);
       }
       else
       {
 	len += snprintf(&buff[len], sizeof(buff) - len, "%s\t", valueString);
-	len += snprintf(&buff[len], sizeof(buff) - len, "%f\t", unitString);
+	len += snprintf(&buff[len], sizeof(buff) - len, "%s\t", unitString);
       }
       return buff;
     }
@@ -1198,7 +1198,7 @@ mbus_vif_value_type(u_char vif)
 /// Generate CSV for variable-length data 
 //------------------------------------------------------------------------------
 char *
-mbus_data_variable_csv(mbus_data_variable *data)
+mbus_data_variable_csv(mbus_data_variable *data, uint primary_address)
 {
     mbus_data_record *record;
     mbus_data_variable_header *header;
@@ -1222,12 +1222,10 @@ mbus_data_variable_csv(mbus_data_variable *data)
 	    len += snprintf(&buff[len], sizeof(buff) - len, "%s\t",
 	    mbus_decode_manufacturer(header->manufacturer[0], header->manufacturer[1]));
 	    len += snprintf(&buff[len], sizeof(buff) - len, "%d\t", header->version);
-	    len += snprintf(&buff[len], sizeof(buff) - len, "%d\t", header->access_no);
+	    len += snprintf(&buff[len], sizeof(buff) - len, "%d\t", primary_address);//header->access_no);
 	    len += snprintf(&buff[len], sizeof(buff) - len, "%s\t", mbus_data_variable_medium_lookup(header->medium));
 	  }
       
-	  //len += snprintf(&buff[len], sizeof(buff) - len, "%s\t", mbus_data_record_value(record));
-	  //len += snprintf(&buff[len], sizeof(buff) - len, "%s\t", mbus_data_record_unit(record));
 	  len += snprintf(&buff[len], sizeof(buff) - len, "%s\t", mbus_data_record_value_and_unit(record));
 	  time_t currenttime;
 	  time (&currenttime);
@@ -1244,8 +1242,6 @@ mbus_data_variable_csv(mbus_data_variable *data)
 	  len += snprintf(&buff[len], sizeof(buff) - len, "%s\t", mbus_data_variable_header_status(header->status));//state german
 	  
 	  len += snprintf(&buff[len], sizeof(buff) - len, "\n");
-	  //printf("%s\n", mbus_data_record_function(record));
-	  //printf("%s\n", mbus_data_record_unit(record));
       }
       
       return buff;
@@ -1266,62 +1262,15 @@ mbus_data_fixed_csv(mbus_data_fixed *data)
 
   if (data)
   {
-      /*len += snprintf(&buff[len], sizeof(buff) - len, "<MBusData>\n\n");
-  
-      len += snprintf(&buff[len], sizeof(buff) - len, "    <SlaveInformation>\n");
-      len += snprintf(&buff[len], sizeof(buff) - len, "        <Id>%d</Id>\n", (int)mbus_data_bcd_decode(data->id_bcd, 4));
-      
-      mbus_str_xml_encode(str_encoded, mbus_data_fixed_medium(data), sizeof(str_encoded)); 
-      len += snprintf(&buff[len], sizeof(buff) - len, "        <Medium>%s</Medium>\n", str_encoded);
-      
-      len += snprintf(&buff[len], sizeof(buff) - len, "        <AccessNumber>%d</AccessNumber>\n", data->tx_cnt);
-      len += snprintf(&buff[len], sizeof(buff) - len, "        <Status>%.2X</Status>\n", data->status);
-      len += snprintf(&buff[len], sizeof(buff) - len, "    </SlaveInformation>\n\n");
-	    
-      len += snprintf(&buff[len], sizeof(buff) - len, "    <DataRecord id=\"0\">\n");
-      
-      mbus_str_xml_encode(str_encoded, mbus_data_fixed_function(data->status), sizeof(str_encoded));
-      len += snprintf(&buff[len], sizeof(buff) - len, "        <Function>%s</Function>\n", str_encoded);
-      
-      mbus_str_xml_encode(str_encoded, mbus_data_fixed_unit(data->cnt1_type), sizeof(str_encoded));
-      len += snprintf(&buff[len], sizeof(buff) - len, "        <Unit>%s</Unit>\n", str_encoded);
-      if ((data->status & MBUS_DATA_FIXED_STATUS_FORMAT_MASK) == MBUS_DATA_FIXED_STATUS_FORMAT_BCD)
-      {
-	  len += snprintf(&buff[len], sizeof(buff) - len, "        <Value>%d</Value>\n", (int)mbus_data_bcd_decode(data->cnt1_val, 4));
-      }
-      else
-      {
-	  len += snprintf(&buff[len], sizeof(buff) - len, "        <Value>%d</Value>\n", mbus_data_int_decode(data->cnt1_val, 4));
-      }
-      len += snprintf(&buff[len], sizeof(buff) - len, "    </DataRecord>\n\n");      
-
-      len += snprintf(&buff[len], sizeof(buff) - len, "    <DataRecord id=\"1\">\n");
-      
-      mbus_str_xml_encode(str_encoded, mbus_data_fixed_function(data->status), sizeof(str_encoded));
-      len += snprintf(&buff[len], sizeof(buff) - len, "        <Function>%s</Function>\n", str_encoded);
-      
-      mbus_str_xml_encode(str_encoded, mbus_data_fixed_unit(data->cnt2_type), sizeof(str_encoded));
-      len += snprintf(&buff[len], sizeof(buff) - len, "        <Unit>%s</Unit>\n", str_encoded);
-      if ((data->status & MBUS_DATA_FIXED_STATUS_FORMAT_MASK) == MBUS_DATA_FIXED_STATUS_FORMAT_BCD)
-      {
-	  len += snprintf(&buff[len], sizeof(buff) - len, "        <Value>%d</Value>\n", (int)mbus_data_bcd_decode(data->cnt2_val, 4));
-      }
-      else
-      {
-	  len += snprintf(&buff[len], sizeof(buff) - len, "        <Value>%d</Value>\n", mbus_data_int_decode(data->cnt2_val, 4));
-      }
-      len += snprintf(&buff[len], sizeof(buff) - len, "    </DataRecord>\n\n");      
-
-      len += snprintf(&buff[len], sizeof(buff) - len, "</MBusData>\n");
-
-      return buff;*/
+      //not implemented
+      return buff;
   }
   
   return "";
 }
 
 char *
-mbus_frame_data_csv(mbus_frame_data *data)
+mbus_frame_data_csv(mbus_frame_data *data, uint primary_address)
 {
   if (data)
   {
@@ -1332,7 +1281,7 @@ mbus_frame_data_csv(mbus_frame_data *data)
       
       if (data->type == MBUS_DATA_TYPE_VARIABLE)
       {
-	  return mbus_data_variable_csv(&(data->data_var));
+	  return mbus_data_variable_csv(&(data->data_var), primary_address);
       }
   }
   

@@ -26,9 +26,9 @@ const char *mbus_data_record_value_and_unit(mbus_data_record* record);
 // CSV generating functions
 //
 void  mbus_str_csv_encode(u_char *dst, const u_char *src, size_t max_len);
-char *mbus_data_variable_csv(mbus_data_variable *data);
+char *mbus_data_variable_csv(mbus_data_variable *data, uint primary_address);
 char *mbus_data_fixed_csv(mbus_data_fixed *data);
-char *mbus_frame_data_csv(mbus_frame_data *data);
+char *mbus_frame_data_csv(mbus_frame_data *data, uint primary_address);
 
 char *mbus_data_variable_header_csv(mbus_data_variable_header *header);
 

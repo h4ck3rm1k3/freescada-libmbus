@@ -3095,7 +3095,6 @@ mbus_data_record_append(mbus_data_variable *data, mbus_data_record *record)
         if (data->record == NULL)
         {
             data->record = record;
-            data->record->next = NULL;
         }
         else
         {

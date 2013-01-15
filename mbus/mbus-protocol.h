@@ -2,9 +2,9 @@
 // Copyright (C) 2010-2011, Robert Johansson, Raditex AB
 // All rights reserved.
 //
-// FreeSCADA 
-// http://www.FreeSCADA.com
-// freescada@freescada.com
+// rSCADA 
+// http://www.rSCADA.se
+// info@rscada.se
 //
 //------------------------------------------------------------------------------
 
@@ -85,6 +85,8 @@ typedef struct _mbus_frame {
     int type;
     
     //mbus_frame_data frame_data;
+
+    void *next; // pointer to next mbus_frame for multi-telegram replies
 
 } mbus_frame;
 
@@ -174,6 +176,8 @@ typedef struct _mbus_data_variable {
     
     u_char *data;
     size_t  data_len;
+    
+    u_char more_records_follow;
     
     // are these needed/used?
     u_char  mdh;
@@ -499,6 +503,8 @@ char *mbus_error_str();
 void  mbus_error_str_set(char *message);
 void  mbus_error_reset();
 
+void  mbus_parse_set_debug(int debug);
+
 //
 // data encode/decode functions
 //
@@ -508,13 +514,18 @@ const char *mbus_decode_manufacturer(u_char byte1, u_char byte2);
 int mbus_data_bcd_encode(u_char *bcd_data, size_t bcd_data_size, int value);
 int mbus_data_int_encode(u_char *int_data, size_t int_data_size, int value);
 
-long mbus_data_bcd_decode(u_char *bcd_data, size_t bcd_data_size);
+long long mbus_data_bcd_decode(u_char *bcd_data, size_t bcd_data_size);
 int  mbus_data_int_decode(u_char *int_data, size_t int_data_size);
 long mbus_data_long_decode(u_char *int_data, size_t int_data_size);
+long long mbus_data_long_long_decode(u_char *int_data, size_t int_data_size);
+
+float mbus_data_float_decode(u_char *float_data);
 
 void mbus_data_tm_decode(struct tm *t, u_char *t_data, size_t t_data_size);
 
 void mbus_data_str_decode(u_char *dst, const u_char *src, size_t len);
+
+void mbus_data_bin_decode(u_char *dst, const u_char *src, size_t len, size_t max_len);
 
 const char *mbus_data_fixed_medium(mbus_data_fixed *data);
 const char *mbus_data_fixed_unit(int medium_unit_byte);

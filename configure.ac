@@ -2,13 +2,13 @@ dnl ----------------------------------------------------------------------------
 dnl Copyright (C) 2010, Raditex AB
 dnl All rights reserved.
 dnl
-dnl FreeSCADA 
-dnl http://www.FreeSCADA.com
-dnl freescada@freescada.com
+dnl rSCADA 
+dnl http://www.rSCADA.se
+dnl info@rscada.se
 dnl 
 dnl ----------------------------------------------------------------------------
 
-AC_INIT([mbus], [0.7.0], [info@rscada.se], [mbus], [http://www.freescada.com/libmbus/])
+AC_INIT([mbus], [0.7.0], [info@rscada.se], [mbus], [http://www.rscada.se/libmbus/])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 
 AC_CONFIG_MACRO_DIR([m4])

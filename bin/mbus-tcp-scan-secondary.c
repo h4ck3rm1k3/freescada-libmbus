@@ -2,9 +2,9 @@
 // Copyright (C) 2011, Robert Johansson, Raditex AB
 // All rights reserved.
 //
-// FreeSCADA 
-// http://www.FreeSCADA.com
-// freescada@freescada.com
+// rSCADA 
+// http://www.rSCADA.se
+// info@rscada.se
 //
 //------------------------------------------------------------------------------
 
@@ -27,7 +27,7 @@ int
 main(int argc, char **argv)
 {
     char *host, *addr_mask;
-    int port, address;
+    int port;
 
     if (argc != 4 && argc != 3)
     {
@@ -51,13 +51,13 @@ main(int argc, char **argv)
     if (strlen(addr_mask) != 16)
     {
         fprintf(stderr, "Misformatted secondary address mask. Must be 16 character HEX number.\n");
-        return -1;
+        return 1;
     }
 
     if ((handle = mbus_connect_tcp(host, port)) == NULL)
     {
         fprintf(stderr, "Failed to setup connection to M-bus gateway: %s\n", mbus_error_str());
-        return -1;
+        return 1;
     }
 
     mbus_scan_2nd_address_range(handle, 0, addr_mask);

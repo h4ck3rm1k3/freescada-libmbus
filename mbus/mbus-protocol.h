@@ -461,6 +461,8 @@ int mbus_frame_internal_pack(mbus_frame *frame, mbus_frame_data *frame_data);
 //
 // data parsing
 //
+const char *mbus_data_record_unit(mbus_data_record *record);
+const char *mbus_data_record_value(mbus_data_record *record);
 const char *mbus_data_record_function(mbus_data_record *record);
 const char *mbus_data_fixed_function(int status);
 
@@ -508,9 +510,10 @@ const char *mbus_decode_manufacturer(u_char byte1, u_char byte2);
 int mbus_data_bcd_encode(u_char *bcd_data, size_t bcd_data_size, int value);
 int mbus_data_int_encode(u_char *int_data, size_t int_data_size, int value);
 
-long mbus_data_bcd_decode(u_char *bcd_data, size_t bcd_data_size);
-int  mbus_data_int_decode(u_char *int_data, size_t int_data_size);
-long mbus_data_long_decode(u_char *int_data, size_t int_data_size);
+long  mbus_data_bcd_decode(u_char *bcd_data, size_t bcd_data_size);
+int   mbus_data_int_decode(u_char *int_data, size_t int_data_size);
+float mbus_data_float_decode(u_char *float_data, size_t float_data_size);
+long  mbus_data_long_decode(u_char *int_data, size_t int_data_size);
 
 void mbus_data_tm_decode(struct tm *t, u_char *t_data, size_t t_data_size);
 

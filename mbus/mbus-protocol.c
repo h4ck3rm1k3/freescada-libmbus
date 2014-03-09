@@ -396,6 +396,26 @@ mbus_data_int_decode(u_char *int_data, size_t int_data_size)
     return -1;
 }
 
+float 
+mbus_data_float_decode(u_char *float_data, size_t float_data_size)
+{
+    float val = 0.0;
+    int   tmp_val = 0;
+    size_t i;
+    
+    if (float_data)
+    {
+      for (i = float_data_size; i > 0; i--)
+      {
+	tmp_val = (tmp_val << 8) + float_data[i-1];
+      }
+      val = *(float *)(&tmp_val);
+      return val;
+    }
+    
+    return -1;
+}
+
 long
 mbus_data_long_decode(u_char *int_data, size_t int_data_size)
 {
@@ -1626,6 +1646,7 @@ mbus_data_record_decode(mbus_data_record *record)
     {
         int val;
         long val2;
+	float val3;
         struct tm time;
             
         switch (record->drh.dib.dif & 0x0F)
@@ -1710,7 +1731,16 @@ mbus_data_record_decode(mbus_data_record *record)
 
                 break;  
 
-            // case 0x05:
+	    case 0x05: // 4 byte float (32 bit)
+	      
+		val3 = mbus_data_float_decode(record->data, 4);
+		
+		snprintf(buff, sizeof(buff), "%f", val3);
+		
+		if (debug)
+		  printf("%s: DIF 0x%.2x was decoded using 4 byte float\n", __PRETTY_FUNCTION__, record->drh.dib.dif);
+		
+		break;
 
             case 0x06: // 6 byte integer (48 bit)
 
@@ -1801,6 +1831,7 @@ mbus_data_record_decode(mbus_data_record *record)
 
             default:
         
+		
                 snprintf(buff, sizeof(buff), "Unknown DIF (0x%.2x)", record->drh.dib.dif);
                 break;
         }
